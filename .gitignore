@@ -160,4 +160,3 @@ cython_debug/
 #.idea/
 
 /data
-y_test_predicted.csv
