@@ -3,14 +3,12 @@ import pandas as pd
 import joblib as jl
 
 
-pipeline = jl.load('model/sgd_pipeline.pkl')
-
-
 class MotoricaPipeline:
     def __init__(self) -> None:
-        self.pipeline = pipeline
+        pass
     
     def fit(self, X):
+        self.pipeline = jl.load('motorica_pl.pkl')
         return self 
     
     def predict(self, X, as_df=False):
@@ -26,4 +24,7 @@ class MotoricaPipeline:
         
         return np.array(y) 
     
-    
+    def fit_predict(self, X, as_df=False):
+        return self.fit(X).predict(X, as_df=as_df)
+
+
