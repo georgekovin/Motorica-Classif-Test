@@ -63,12 +63,16 @@
 Создавал я ее с помощью библиотеки `sklearn`, модуль `linear_model`, класс `SGDClassifier`. Имеет моя модель следующий вид:
 
 ```python
-SGDClassifier(
-    alpha=0.01, 
-    eta0=1, 
-    learning_rate='adaptive', 
-    penalty='l2', 
-    n_jobs=-1, 
-    random_state=3
-)
+SGDClassifier(alpha=0.01, 
+              eta0=10, 
+              learning_rate='adaptive', 
+              n_jobs=-1,
+              random_state=3)
 ```
+
+Также данная модель помещена в **пайплайн**, который состоит из 3 шагов:
+- *reshaper*, `TensorToMatrix`: мой авторский трансформер, который переводит данные в удобный для обучения вид.
+- *scaler*, `StandardScaler`: стандартизация данных.
+- *model*,  `SGDClassifier`: собственно, вышеописанная модель. 
+
+Данный пайплайн реализован в классе **`MotoricaPipeline`** (по адресу `model/motorica_pl.py`), который имеет возможность принимать и выдавать данные в оригинальном формате без каких либо потерь.
