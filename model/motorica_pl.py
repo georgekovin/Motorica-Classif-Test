@@ -133,5 +133,18 @@ class MotoricaPipeline(BaseEstimator):
 
         with open('./data/y_train.npy', 'wb') as y_file:
             np.save(y_file, data_updated[1])
+    
+    
+    def get_pipeline_step(self, step):
+        """Получение конкретного шага из пайплайна.
+
+        Args:
+        ---
+            step (`str`): название шага
+
+        Returns:
+        ---
+            `Any`: шаг пайплайна
+        """
         
-        
+        return self.pipeline.named_steps[step]
