@@ -142,9 +142,17 @@ class MotoricaPipeline(BaseEstimator):
         ---
             step (`str`): название шага
 
+        Raises:
+        ---
+            `ValueError`: пайплайн не имеет шага, котроый вы указали
+
         Returns:
         ---
             `Any`: шаг пайплайна
         """
+        steps = ['reshaper', 'scaler', 'model']
+        
+        if step not in steps:
+            raise ValueError(f'Pipeline have no such step - {step}')
         
         return self.pipeline.named_steps[step]
