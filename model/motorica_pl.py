@@ -77,7 +77,7 @@ class MotoricaPipeline(BaseEstimator):
         Args:
         ---
             X (`ArrayLike`): трехмерный массив с размерностью (`наблюдения`, `датчики`, `время`)
-            as_df (bool, optional): при `True` метод возвращает результат в формате DataFrame, по умолчанию - `False`
+            as_df (`bool`, optional): при `True` метод возвращает результат в формате DataFrame, по умолчанию - `False`
 
         Returns:
         ---
@@ -123,10 +123,14 @@ class MotoricaPipeline(BaseEstimator):
             X (`ArrayLike`): данные, которые нужно добавить к старым
             y (`ArrayLike`): новая целевая переменная, которую нужно соединить со старой
         """
+        self._check_params(X, 'X', 3)     
+        self._check_params(y, 'y', 2)
+        
+        pl_updated = self.pipeline.fit(X, y)
         data_updated = self._update_data(X, y)
         
         with open('./motorica_pl.pkl', 'wb') as pl_file:
-            pickle.dump(self.pipeline, pl_file)
+            pickle.dump(pl_updated, pl_file)
         
         with open('./data/X_train.npy', 'wb') as X_file:
             np.save(X_file, data_updated[0])
@@ -153,6 +157,6 @@ class MotoricaPipeline(BaseEstimator):
         steps = ['reshaper', 'scaler', 'model']
         
         if step not in steps:
-            raise ValueError(f'Pipeline have no such step - {step}')
+            raise ValueError(f'Pipeline have no such step - {step}.')
         
         return self.pipeline.named_steps[step]
